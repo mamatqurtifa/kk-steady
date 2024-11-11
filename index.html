@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="shortcut icon"
+      href="images/Steady-Logo-Small.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "steady-red": "#EC5E65",
+              "steady-blue": "#90D1E8",
+              "steady-yellow": "#F7C961",
+              "steady-grey": "#404040",
+            },
+            gridTemplateRows: {
+              // Simple 16 row grid
+              32: "repeat(32, minmax(0, 1fr))",
+
+              // Complex site-specific row configuration
+              layout: "200px minmax(900px, 1fr) 100px",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <title>Steady Stembayo</title>
+  </head>
+  <body>
+    <!--Navbar-->
+    <div
+      class="fixed bg-white m-0 top-0 h-16 md:h-20 lg:h-24 py-4 md:py-2 lg:py-0 flex flex-row justify-between lg:mx-0 lg:justify-around items-center z-20 w-full gap-4"
+    >
+      <div class="h-full flex items-center ml-8 lg:ml-0">
+        <img
+          src="images/Steady-Logo-Small.png"
+          alt="Logo Steady"
+          class="h-4/6"
+        />
+      </div>
+      <div class="hidden lg:flex gap-8 text-xl m-2 ml-24">
+        <div
+          class="hover:text-steady-blue cursor-pointer"
+          onclick="scroll_to('home')"
+        >
+          Home
+        </div>
+        <div
+          class="hover:text-steady-yellow cursor-pointer"
+          onclick="scroll_to('about')"
+        >
+          About
+        </div>
+        <div
+          class="hover:text-steady-yellow cursor-pointer"
+          onclick="scroll_to('products')"
+        >
+          Products
+        </div>
+        <div
+          class="hover:text-steady-red cursor-pointer"
+          onclick="scroll_to('activities')"
+        >
+          Activities
+        </div>
+      </div>
+      <!-- Search Bar -->
+      <div class="hidden lg:flex">
+        <form action="#">
+          <input
+            type="text"
+            class="py-4 px-8 w-72 rounded-full drop-shadow-lg"
+            placeholder="Search"
+            id="searchInput"
+          />
+        </form>
+      </div>
+      <!-- Hamburger Menu -->
+      <div class="flex items-center justify-center lg:hidden">
+        <button
+          id="hamburger-btn"
+          onclick="toggleMenu()"
+          oninput="search()"
+          class="text-center w-full mr-8"
+        >
+          <i class="fa-solid fa-bars" style="color: black"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Result -->
+    <div
+      id="searchResults"
+      class="mt-6 fixed bg-black top-12 md:top-20 lg:top-24 w-full lg:hidden z-9 hidden lg:flex"
+    >
+      <ul id="searchResultList" class="w-full"></ul>
+    </div>
+
+    <!-- Menu List (Hidden by default on larger screens) -->
+    <div
+      id="menu-list"
+      class="fixed bg-white top-0 w-full lg:hidden z-10 hidden pt-12"
+    >
+      <div class="flex flex-col items-center py-4">
+        <div
+          id="navbar-list"
+          class="hover:text-steady-blue cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('home'); toggleMenu()"
+        >
+          Home
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-yellow cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('about'); toggleMenu()"
+        >
+          About
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-yellow cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('products'); toggleMenu()"
+        >
+          Products
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-red cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('activities'); toggleMenu()"
+        >
+          Activities
+        </div>
+
+        <!-- Search Bar -->
+        <form action="#" class="w-full px-4 pt-2">
+          <input
+            id="searchInput"
+            type="text"
+            class="py-3 px-4 w-full rounded-full drop-shadow-lg text-lg"
+            placeholder="Search"
+          />
+        </form>
+        
+        <div class="autocomplete">
+          <ul id="searchResults"></ul>
+        </div>
+
+        <!-- Search Result -->
+      </div>
+    </div>
+
+    <!--Content-->
+    <div class="px-6 md:px-16 xl:px-40">
+      <div
+        class="flex flex-col justify-center items-center h-[93vh] lg:h-auto lg:pt-48"
+        id="home"
+      >
+        <img
+          src="images/Steady-Main-Logo-Reflect.png"
+          alt="Main Logo"
+          class="h-44 md:h-48 md:h-72 lg:h-96 min-w-[340px]"
+        />
+        <p class="text-steady-grey text-center text-2xl">
+          Stembayo Education Advertising Documentation Society
+        </p>
+      </div>
+
+      <div
+        class="lg:mt-48 pt-28 flex justify-center items-center h-[90vh] lg:h-auto"
+        id="about"
+      >
+        <div class="w-[70rem] flex flex-col items-center lg:flex-row">
+          <img
+            src="images/Steady-Logo-Retro-Round-Bubble.png"
+            alt="Logo Retro Bubble"
+            class="w-full lg:w-96 mb-16 md:mb-0"
+          />
+          <div class="text-lg flex flex-col gap-4 justify-center">
+            <p class="text-steady-red text-4xl sm:text-5xl font-bold">About Us</p>
+            <p>
+              Established on 22nd July 2022 Steady is an extracurricular
+              activity at 2 Depok Sleman Vocational High School under the
+              auspices of the Student Council in the skills and entrepreneurship
+              field section.
+            </p>
+            <p>
+              Our slogan
+              <span class="text-steady-red font-bold"
+                >"Bring the inside out"</span
+              >
+              encapsulates our commitment to make everyone inside and outside
+              understand more about Stembayo and its features.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-28 pt-28 flex flex-col justify-center items-center"
+        id="products"
+      >
+        <div class="flex flex-col justify-center">
+          <p class="text-steady-red text-xl sm:text-5xl font-bold">Our Products</p>
+          <p>See all our project and exclusive products</p>
+        </div>
+        <div
+          class="pt-10 grid justify-between grid-cols-8 lg:grid-cols-12 grid-rows-8 lg:grid-rows-32 text-white w-full gap-2 md:gap-4"
+        >
+          <!--5x4-->
+          <!-- 4x1 & 3x2 -->
+          <div
+            class="bg-white py-4 col-span-4 lg:col-span-5 row-span-1  lg:row-span-4 rounded-2xl sm:rounded-3xl drop-shadow-lg relative flex justify-center items-center overflow-hidden order-1 lg:order-1"
+          >
+            <img
+              src="images/Steady-Logo-Retro.png"
+              alt="logo-retro"
+              class="w-4/6 lg:w-1/2 hover:scale-125 ease-in-out duration-300"
+            />
+          </div>
+          <!--4x8-->
+          <!-- 4x2 & 4x6 -->
+          <div
+            class="bg-steady-yellow col-span-4 lg:col-span-4 row-span-2  lg:row-span-8 rounded-2xl md:rounded-3xl drop-shadow-lg relative overflow-hidden flex items-center lg:items-start order-2 lg:order-2"
+          >
+            <img
+              src="images/products/steady-tshirt.png"
+              alt="tshirt"
+              class="absolute hover:scale-125 ease-in-out duration-300"
+            />
+          </div>
+          <!--3x8-->
+          <div
+            class="bg-steady-red col-span-4 lg:col-span-3 row-span-2 lg:row-span-8 rounded-2xl md:rounded-3xl drop-shadow-lg relative overflow-hidden order-3 lg:order-3"
+          >
+            <img
+              src="images/products/steady-lanyard.png"
+              alt="lanyard"
+              class="absolute hover:scale-125 ease-in-out duration-300"
+            />
+          </div>
+          <!--5x20-->
+          <!-- 4x12 -->
+          <div
+            class="bg-steady-blue col-span-8 row-span-5 lg:col-span-5 lg:row-[span_20_/_span_20] rounded-3xl drop-shadow-lg flex flex-col justify-between left-0 top-0 overflow-hidden order-6 lg:order-4"
+          >
+            <h1
+              class="text-white w-1/2 text-5xl lg:text-6xl drop-shadow-lg font-extrabold m-8"
+            >
+              EVACUATION SIGN
+            </h1>
+            <img
+              src="images/products/steady-evacuation-sign.png"
+              alt="lanyard"
+              class="w-1/2 lg:w-full absolute bottom-0 right-0 lg:left-0 hover:scale-125 ease-in-out duration-300"
+            />
+            <button
+              class="text-black text-lg md:text-2xl bg-white py-4 px-8 rounded-full drop-shadow-lg self-start m-8"
+            >
+              See More
+            </button>
+          </div>
+          <!--7x8-->
+          <div
+            class="bg-steady-yellow col-span-5 lg:col-span-7 row-span-3 lg:row-span-8 rounded-2xl md:rounded-3xl drop-shadow-lg relative flex flex-col justify-between p-8 overflow-hidden order-7 lg:order-5"
+          >
+            <h1
+              class="text-white text-2xl lg:text-6xl drop-shadow-lg font-extrabold"
+            >
+              OFFICIAL ANNUAL MERCHANDISE
+            </h1>
+            <button
+              class="text-black text-lg md:text-2xl mt-4 lg:mt-0 bg-white py-4 px-8 rounded-full drop-shadow-lg self-start"
+            >
+              See More
+            </button>
+          </div>
+          <!--4x8-->
+          <div
+            class="bg-steady-red col-span-4 row-span-1 lg:row-span-8 rounded-2xl md:rounded-3xl drop-shadow-lg relative overflow-hidden order-5 lg:order-6"
+          >
+            <img
+              src="images/products/steady-stickers-upscaled.png"
+              alt="stickers"
+              class="w-full absolute hover:scale-125 ease-in-out duration-300"
+            />
+          </div>
+          <!--3x8-->
+          <div
+            class="bg-steady-blue col-span-4 lg:col-span-3 row-span-2 lg:row-span-8 rounded-2xl lg:rounded-3xl drop-shadow-lg relative overflow-hidden order-4 lg:order-7"
+          >
+            <img
+              src="images/products/steady-tote-bag.png"
+              alt="tote-bag"
+              class="absolute hover:scale-125 ease-in-out duration-300"
+            />
+          </div>
+          <!--9x8-->
+          <div
+            class="bg-steady-red col-span-9 row-span-8 rounded-3xl drop-shadow-lg relative overflow-hidden flex flex-col justify-between order-9 lg:order-8"
+          >
+            <h1
+              class="text-white text-3xl lg:text-8xl drop-shadow-lg font-extrabold w-1/2 mt-8 mx-8"
+            >
+              2024 CALENDARS
+            </h1>
+            <img
+              src="images/products/steady-calendars.png"
+              alt="calendars"
+              class="h-full absolute right-0 hover:scale-125 ease-in-out duration-300"
+            />
+            <button
+              class="text-black text-lg lg:text-2xl bg-white py-4 px-8 rounded-full drop-shadow-lg self-start mb-8 mx-8 mt-4 lg:mt-0"
+            >
+              See More
+            </button>
+          </div>
+          <!--3x8-->
+          <div
+            class="bg-white col-span-4 lg:col-span-3 row-span-3 lg:row-span-8 rounded-3xl drop-shadow-lg relative flex flex-col justify-center overflow-hidden order-8 lg:order-9"
+          >
+            <img
+              src="images/products/empty-box.png"
+              alt="empty-box"
+              class="bottom-0 absolute hover:scale-125 ease-in-out duration-300"
+            />
+            <h1
+              class="text-red-500 text-2xl lg:text-6xl drop-shadow-lg font-extrabold m-4 lg:m-8"
+            >
+              WHAT'S NEXT?
+            </h1>
+            <button
+              class="hidden lg:block text-black text-2xl bg-white py-4 px-8 rounded-full drop-shadow-lg self-start m-8"
+            >
+              Discover
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-16 pt-24 md:pt-0 md:mt-0 lg:mt-28 lg:pt-28 flex flex-col justify-center items-center h-[90vh] lg:h-auto"
+        id="activities"
+      >
+        <div class="flex flex-col justify-center items-center">
+          <p class="text-steady-red text-4xl sm:text-5xl font-bold">What We Do?</p>
+          <p>Let's discover our activities</p>
+        </div>
+
+        <div class="flex mt-8 sm:mt-6 lg:mt-0 items-center sm:items-start">
+          <div class="w-1/2 text-right flex flex-col justify-center gap-8">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-semibold text-steady-grey">
+                Weekly Extracurricular
+              </h1>
+              <p class="text-sm sm:text-base font-extralight">Tuesday 23, January 2024</p>
+            </div>
+            <div>
+              <p class="text-sm sm:text-base">
+                Established on 22nd July 2022 Steady is an extracurricular
+                activity at 2 Depok Sleman Vocational High School.
+              </p>
+            </div>
+            <div>
+              <button
+                class="text-black bg-steady-blue text-lg sm:text-2xl py-2 px-4 sm:py-4 sm:px-8 rounded-full drop-shadow-lg"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+          <div class="w-1/2">
+            <img src="images/steady-activities-1.png" alt="activity-1" />
+          </div>
+        </div>
+
+        <div class="flex pt-8 lg:pt-0">
+          <div class="w-1/2">
+            <img src="images/steady-activities-2.png" alt="activity-1" />
+          </div>
+          <div class="w-1/2 flex flex-col justify-center gap-8">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-semibold text-steady-grey">
+                Offline Meeting
+              </h1>
+              <p class="text-sm sm:text-base font-extralight">Tuesday 23, January 2024</p>
+            </div>
+            <div>
+              <p class="text-sm sm:text-base">
+                Established on 22nd July 2022 Steady is an extracurricular
+                activity at 2 Depok Sleman Vocational High School.
+              </p>
+            </div>
+            <div>
+              <button
+                class="text-black bg-steady-yellow text-lg sm:text-2xl py-2 px-4 sm:py-4 sm:px-8 rounded-full drop-shadow-lg"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h1 class="text-center text-3xl sm:text-5xl my-20 sm:my-24">Under the auspices of</h1>
+        <div class="flex justify-around">
+          <img
+            src="images/stembayo-logo.png"
+            alt="stembayo-logo"
+            class="w-24 sm:w-32 lg:w-44"
+          />
+          <img src="images/osis-logo.png" alt="osis-logo" class="w-24 sm:w-32 lg:w-44" />
+          <img src="images/kk-logo.png" alt="kk-logo" class="w-24 sm:w-32 lg:w-44" />
+        </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <div class="flex h-20 sm:h-40 mt-24">
+      <div class="bg-steady-red flex-grow"></div>
+      <div class="bg-steady-yellow flex-grow"></div>
+      <div class="bg-steady-blue flex-grow"></div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>

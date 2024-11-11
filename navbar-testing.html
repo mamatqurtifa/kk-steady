@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="shortcut icon"
+      href="images/Steady-Logo-Small.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "steady-red": "#EC5E65",
+              "steady-blue": "#90D1E8",
+              "steady-yellow": "#F7C961",
+              "steady-grey": "#404040",
+            },
+            gridTemplateRows: {
+              // Simple 16 row grid
+              32: "repeat(32, minmax(0, 1fr))",
+
+              // Complex site-specific row configuration
+              layout: "200px minmax(900px, 1fr) 100px",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <title>Steady Stemabyo</title>
+  </head>
+  <body class="bg-red-200">
+    <!--Navbar-->
+    <div
+      class="fixed bg-white m-0 top-0 h-16 md:h-20 lg:h-24 py-4 md:py-2 lg:py-0 flex flex-row justify-between lg:mx-0 lg:justify-around items-center z-10 w-full gap-4"
+    >
+      <div class="h-full flex items-center ml-8 lg:ml-0">
+        <img
+          src="images/Steady-Logo-Small.png"
+          alt="Logo Steady"
+          class="h-4/6"
+        />
+      </div>
+      <div class="hidden lg:flex gap-8 text-xl m-2 ml-24">
+        <div
+          class="hover:text-steady-blue cursor-pointer"
+          onclick="scroll_to('home')"
+        >
+          Home
+        </div>
+        <div
+          class="hover:text-steady-yellow cursor-pointer"
+          onclick="scroll_to('about')"
+        >
+          About
+        </div>
+        <div
+          class="hover:text-steady-yellow cursor-pointer"
+          onclick="scroll_to('products')"
+        >
+          Products
+        </div>
+        <div
+          class="hover:text-steady-red cursor-pointer"
+          onclick="scroll_to('activities')"
+        >
+          Activities
+        </div>
+      </div>
+      <!-- Search -->
+      <div class="hidden lg:flex">
+        <form action="#">
+          <input
+            type="text"
+            class="py-4 px-8 w-72 rounded-full drop-shadow-lg"
+            placeholder="Search"
+          />
+        </form>
+      </div>
+
+      <!-- Hamburger Menu -->
+      <div class="flex items-center justify-center lg:hidden">
+        <button
+          id="hamburger-btn"
+          onclick="toggleMenu()"
+          class="text-center w-full mr-8"
+        >
+          <i class="fa-solid fa-bars" style="color: black"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu List (Hidden by default on larger screens) -->
+    <div
+      id="menu-list"
+      class="fixed bg-white top-12 md:top-20 lg:top-24 w-full lg:hidden z-9 hidden"
+    >
+      <div class="flex flex-col items-center py-4">
+        <div
+          id="navbar-list"
+          class="hover:text-steady-blue cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('home'); toggleMenu()"
+        >
+          Home
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-yellow cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('about'); toggleMenu()"
+        >
+          About
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-yellow cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('products'); toggleMenu()"
+        >
+          Products
+        </div>
+        <div
+          id="navbar-list"
+          class="hover:text-steady-red cursor-pointer my-2 w-full px-8 py-1 text-lg"
+          onclick="scroll_to('activities'); toggleMenu()"
+        >
+          Activities
+        </div>
+
+        <!-- Search Bar -->
+        <form action="#" class="w-full px-4 pt-2">
+          <input
+            id="searchInput"
+            type="text"
+            class="py-3 px-4 w-full rounded-full drop-shadow-lg text-lg"
+            placeholder="Search"
+            oninput="search()"
+          />
+        </form>
+
+        <!-- Search Result -->
+        <div id="searchResults" class="mt-6"></div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById("menu-list");
+      menu.classList.toggle("hidden");
+    }
+
+    // Hide Navbar LIst
+    function handleSearch() {
+      var searchInput = document.getElementById("searchInput");
+      var menuLists = document.querySelectorAll("#navbar-list");
+
+      searchInput.onclick = function () {
+        menuLists.forEach(function (menuList) {
+          menuList.classList.add("hidden");
+        });
+      };
+
+      searchInput.oninput = function () {
+        if (searchInput.value.trim() === "") {
+          menuLists.forEach(function (menuList) {
+            menuList.classList.remove("hidden");
+          });
+        } else {
+          menuLists.forEach(function (menuList) {
+            menuList.classList.add("hidden");
+          });
+        }
+      };
+    }
+
+    handleSearch();
+
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+
+    const menuItems = {
+      Home: "home",
+      About: "about",
+      Product: "products",
+      Activities: "activities",
+    };
+
+    searchInput.addEventListener("input", function () {
+      const inputValue = this.value.toLowerCase();
+      let matches = Object.keys(menuItems).filter((item) =>
+        item.toLowerCase().includes(inputValue)
+      );
+
+      if (inputValue === "") {
+        matches = [];
+      }
+
+      displayMatches(matches);
+    });
+
+    function displayMatches(matches) {
+      const html = matches.map((match) => `<li>${match}</li>`).join("");
+      searchResults.innerHTML = html;
+
+      const listItems = searchResults.querySelectorAll("li");
+      listItems.forEach((item) => {
+        item.addEventListener("click", function () {
+          const selectedItem = this.textContent.trim();
+          const targetDivId = menuItems[selectedItem];
+          const targetDiv = document.getElementById(targetDivId);
+          if (targetDiv) {
+            targetDiv.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+            targetDiv.classList.add("hover-effect");
+            targetDiv.addEventListener("mouseleave", function () {
+              targetDiv.classList.remove("hover-effect");
+            });
+          }
+        });
+      });
+    }
+  </script>
+</html>
